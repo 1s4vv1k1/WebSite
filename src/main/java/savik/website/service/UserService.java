@@ -36,7 +36,6 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setActive(true);
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Collections.singleton(Role.USER));
@@ -63,7 +62,7 @@ public class UserService implements UserDetailsService {
             return false;
 
         user.setActivationCode(null);
-
+        user.setActive(true);
         userRepo.save(user);
 
         return true;

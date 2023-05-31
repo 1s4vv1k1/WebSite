@@ -6,11 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import savik.website.entities.User;
 import savik.website.service.UserService;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Controller
