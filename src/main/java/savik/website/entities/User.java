@@ -1,6 +1,8 @@
 package savik.website.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,10 +15,26 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Username can't be empty")
     private String username;
+    @NotBlank(message = "Password can't be empty")
     private String password;
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    @Transient
+    @NotBlank(message = "Password confirmation can't be empty")
+    private String password2;
     private boolean active;
 
+    @Email(message = "This email is incorrect")
+    @NotBlank(message = "Email can't be empty")
     private String email;
     private String activationCode;
 
