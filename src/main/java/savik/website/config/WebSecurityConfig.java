@@ -23,15 +23,17 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()
-                .anyRequest().authenticated()
+                    .requestMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                    .rememberMe()
+                .and()
+                    .logout()
+                    .permitAll();
 
         return http.build();
     }
