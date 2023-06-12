@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import savik.website.entities.Role;
 import savik.website.entities.User;
 import savik.website.repository.UserRepository;
+import savik.website.config.EncryptionConfig;
 
 import java.util.*;
 import java.util.stream.Collectors;
