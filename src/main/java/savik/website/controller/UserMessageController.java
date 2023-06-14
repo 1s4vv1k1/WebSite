@@ -13,6 +13,7 @@ import savik.website.entities.User;
 import savik.website.repository.MessageRepository;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -31,6 +32,10 @@ public class UserMessageController {
             @RequestParam(required = false) Message message
     ) {
         Set<Message> messages = user.getMessages();
+        model.addAttribute("userChannel", user);
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
