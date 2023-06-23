@@ -2,6 +2,11 @@ package savik.website.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +18,7 @@ import savik.website.entities.User;
 import savik.website.repository.MessageRepository;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/user-messages")
@@ -29,14 +33,17 @@ public class UserMessageController {
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             Model model,
-            @RequestParam(required = false) Message message
+            @RequestParam(required = false) Message message,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Set<Message> messages = user.getMessages();
+        Page<Message> page = new PageImpl<>(new ArrayList<>(user.getMessages()), pageable, user.getMessages().size());
+        model.addAttribute("url", "/user-messages/" + user.getId());
+        model.addAttribute("userChannel", user);
         model.addAttribute("userChannel", user);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
         model.addAttribute("subscribersCount", user.getSubscribers().size());
         model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
-        model.addAttribute("messages", messages);
+        model.addAttribute("page", page);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
 
